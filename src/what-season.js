@@ -37,4 +37,4 @@ module.exports = {
   getSeason
 };
 
-console.log(getSeason(2020, 02, 31));
+// console.log(getSeason(2020, 02, 31));
