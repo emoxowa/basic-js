@@ -11,25 +11,51 @@ const chainMaker = {
     return this.chain.length;
   },
   addLink(value) {
-    this.chain.push(`( ${value} )`);
-    return chainMaker;
+    this.chain.push(`( ${value !== undefined ? value : ""} )`);
+    return this;
   },
-  removeLink(/* position */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  removeLink(position) {
+    if (
+      typeof position != "number" ||
+      position < 1 ||
+      position > this.chain.length
+    ) {
+      this.chain = [];
+      throw new Error("You can't remove incorrect link!");
+    }
+    this.chain.splice(position - 1, 1);
+    return this;
   },
   reverseChain() {
     this.chain.reverse();
-    return chainMaker;
+    return this;
   },
   finishChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+    const result = this.chain.join("~~");
+    this.chain = [];
+    return result;
+  },
 };
+
 
 module.exports = {
   chainMaker
 };
 
-// console.log(chainMaker.addLink(1).addLink(2).addLink(3));
+console.log(
+  chainMaker
+    .addLink("GHI")
+    .addLink(null)
+    .reverseChain()
+    .addLink(333)
+    .reverseChain()
+    .reverseChain()
+    .addLink(0)
+    .reverseChain()
+    .reverseChain()
+    .addLink("GHI")
+    .finishChain()
+);
+
+
+//'( null )~~( GHI )~~( 333 )~~( 0 )~~( GHI )'
